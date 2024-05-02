@@ -1,5 +1,7 @@
 package hiber.model;
 
+import org.springframework.context.annotation.Scope;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +10,7 @@ public class User {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(name = "id")
    private Long id;
 
    @Column(name = "name")
@@ -18,6 +21,10 @@ public class User {
 
    @Column(name = "email")
    private String email;
+
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "cars_id")
+   private Car car;
 
    public User() {}
    
@@ -58,4 +65,22 @@ public class User {
    public void setEmail(String email) {
       this.email = email;
    }
+
+   public Car getCar() {
+      return car;
+   }
+
+   public void setCar(Car car) {
+      this.car = car;
+   }
+
+   @Override
+   public String toString() {
+      return "Id = " + id + "\n" +
+              "First Name = " + firstName + "\n" +
+              "Last Name = " + lastName + "\n" +
+              "Email = " + email + "\n" +
+              "Car = " + car.toString() + "\n";
+   }
+
 }
